@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Culture and Heritage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <h1>🇮🇳 Indian Culture</h1>
+            <ul>
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/timeline">Timeline</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <h2>Indian Culture and Heritage</h2>
+            <p>Unity in Diversity - Explore the Rich Tapestry of India</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="total-items">0</span>
+                    <span class="stat-label">Cultural Items</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="total-categories">7</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="search-section">
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search festivals, dance forms, heritage sites, cuisine...">
+            <button id="search-btn">🔍</button>
+        </div>
+    </section>
+
+    <section class="category-tabs">
+        <button class="tab-btn active" data-category="all">All</button>
+        <button class="tab-btn" data-category="festivals">Festivals</button>
+        <button class="tab-btn" data-category="dance_forms">Dance Forms</button>
+        <button class="tab-btn" data-category="heritage_sites">Heritage Sites</button>
+        <button class="tab-btn" data-category="cuisine">Cuisine</button>
+        <button class="tab-btn" data-category="music">Music</button>
+        <button class="tab-btn" data-category="art_forms">Art Forms</button>
+        <button class="tab-btn" data-category="languages">Languages</button>
+    </section>
+
+    <section class="container" id="content-area">
+        <div class="loading">Loading cultural treasures...</div>
+    </section>
+
+    <div class="modal" id="detail-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body">
+                <img id="modal-image" src="" alt="">
+                <div class="modal-info">
+                    <span class="modal-category" id="modal-category"></span>
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-description"></p>
+                    <div class="modal-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Location:</span>
+                            <span id="modal-location"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">State:</span>
+                            <span id="modal-state"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>🇮🇳 Celebrating India's Rich Cultural Heritage | Developed with Flask & JavaScript</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

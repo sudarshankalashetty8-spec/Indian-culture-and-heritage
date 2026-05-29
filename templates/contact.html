@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Indian Culture and Heritage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <h1>🇮🇳 Indian Culture</h1>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact" class="active">Contact</a></li>
+                <li><a href="/timeline">Timeline</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="contact-header">
+        <div class="header-content">
+            <h2>Contact Us</h2>
+            <p>Get in Touch - We'd Love to Hear From You</p>
+        </div>
+    </header>
+
+    <section class="contact-content">
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text">
+                        <h4>Address</h4>
+                        <p>Sharnbasava University Gulbarga<br>Karnataka, India</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📧</div>
+                    <div class="info-text">
+                        <h4>Email</h4>
+                        <p>sudarshankalashetty8@gmail.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text">
+                        <h4>Phone</h4>
+                        <p>+91 8861238575</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🕐</div>
+                    <div class="info-text">
+                        <h4>Hours</h4>
+                        <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-container">
+                <h3>Send Us a Message</h3>
+                <div class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required placeholder="What is this about?">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="6" required placeholder="Your message here..."></textarea>
+                    </div>
+                    <button type="button" onclick="sendMessage()" class="submit-btn" id="submitBtn">Send Message ✉️</button>
+                </div>
+                <div id="form-message" class="form-message"></div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="#" class="social-icon">📘</a>
+                <a href="#" class="social-icon">🐦</a>
+                <a href="#" class="social-icon">📸</a>
+                <a href="#" class="social-icon">📺</a>
+                <a href="#" class="social-icon">💼</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>🇮🇳 Celebrating India's Rich Cultural Heritage | Developed with Flask & JavaScript</p>
+    </footer>
+
+    <script>
+        async function sendMessage() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const formMessage = document.getElementById('form-message');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (!name || !email || !subject || !message) {
+                formMessage.textContent = '⚠️ Please fill in all fields.';
+                formMessage.style.color = '#e74c3c';
+                formMessage.style.display = 'block';
+                return;
+            }
+
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, subject, message })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    formMessage.textContent = '✅ Thank you! Your message has been sent to the admin.';
+                    formMessage.style.color = '#27ae60';
+                    formMessage.style.display = 'block';
+                    submitBtn.textContent = '✅ Message Sent!';
+                    submitBtn.style.background = '#27ae60';
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('subject').value = '';
+                    document.getElementById('message').value = '';
+                    setTimeout(() => {
+                        submitBtn.textContent = 'Send Message ✉️';
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                        formMessage.style.display = 'none';
+                    }, 4000);
+                } else {
+                    formMessage.textContent = '❌ Error: ' + (data.error || 'Something went wrong.');
+                    formMessage.style.color = '#e74c3c';
+                    formMessage.style.display = 'block';
+                    submitBtn.textContent = 'Send Message ✉️';
+                    submitBtn.disabled = false;
+                }
+            } catch (err) {
+                formMessage.textContent = '❌ Failed to send. Please try again.';
+                formMessage.style.color = '#e74c3c';
+                formMessage.style.display = 'block';
+                submitBtn.textContent = 'Send Message ✉️';
+                submitBtn.disabled = false;
+            }
+        }
+    </script>
+
+</body>
+</html>
